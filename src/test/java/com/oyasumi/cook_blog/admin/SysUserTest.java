@@ -1,12 +1,15 @@
 package com.oyasumi.cook_blog.admin;
 
-import com.oyasumi.cook_blog.model.SysUser;
+import com.oyasumi.cook_blog.model.admin.SysPermission;
+import com.oyasumi.cook_blog.model.admin.SysUser;
+import com.oyasumi.cook_blog.repository.admin.SysPermissionRepository;
 import com.oyasumi.cook_blog.repository.admin.SysUserRepository;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
@@ -18,6 +21,8 @@ public class SysUserTest {
 
     @Autowired
     private SysUserRepository sysUserRepository;
+    @Autowired
+    private SysPermissionRepository sysPermissionRepository;
 
 //    // 在测试用例之前执行准备的代码
 //    @Before
@@ -43,7 +48,10 @@ public class SysUserTest {
         sysUser.setMobileNo("18827919299");
         sysUser.setEmail("wasirui@sheffield.ac.uk");
         sysUser.setUsername("wasirui");
-        sysUser.setPassword("2wsx@$EDC");
+        String password = "2wsx@$EDC";
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(password);
+        sysUser.setPassword(encodedPassword);
         sysUser.setLastLoginTime(new Date());
         sysUser.setStatus(1);
         sysUserRepository.save(sysUser);
@@ -54,7 +62,9 @@ public class SysUserTest {
         sysUser.setMobileNo("18818217471");
         sysUser.setEmail("kotarin@sheffield.ac.uk");
         sysUser.setUsername("kotarin");
-        sysUser.setPassword("1qaz@WSX");
+        password = "1qaz@WSX";
+        encodedPassword = passwordEncoder.encode(password);
+        sysUser.setPassword(encodedPassword);
         sysUser.setLastLoginTime(new Date());
         sysUser.setStatus(1);
         sysUserRepository.save(sysUser);
@@ -97,6 +107,28 @@ public class SysUserTest {
     @Test
     public void testDeleteAllUser() {
         sysUserRepository.deleteAll();
+    }
+
+    /**
+     * 根据userId查询该用户的权限信息
+     */
+    @Test
+    public void testFindPermissionByUserId() {
+        SysUser sysUser = sysUserRepository.findByUsername("wasirui");
+        String userId = sysUser.getId();
+        List<SysPermission> permissionList = sysPermissionRepository.findPermissionByUserId(userId);
+        System.out.println("Permissions of wasirui: ");
+        for (SysPermission sysPermission : permissionList) {
+            System.out.println(sysPermission);
+        }
+
+        sysUser = sysUserRepository.findByUsername("kotarin");
+        userId = sysUser.getId();
+        permissionList = sysPermissionRepository.findPermissionByUserId(userId);
+        System.out.println("Permissions of kotarin: ");
+        for (SysPermission sysPermission : permissionList) {
+            System.out.println(sysPermission);
+        }
     }
 
     @After

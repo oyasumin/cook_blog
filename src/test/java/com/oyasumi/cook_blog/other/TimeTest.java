@@ -1,6 +1,5 @@
 package com.oyasumi.cook_blog.other;
 
-import com.oyasumi.cook_blog.model.SysUser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

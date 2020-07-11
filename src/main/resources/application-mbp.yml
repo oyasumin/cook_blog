@@ -1,0 +1,19 @@
+server:
+  port: 9070
+
+# 通用数据源配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cook_blog?charset=utf8&useSSL=false
+    username: root
+    password: canon
+
+  # JPA相关配置
+  jpa:
+    # 配置在日志中打印出执行的SQL语句信息
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: mysql

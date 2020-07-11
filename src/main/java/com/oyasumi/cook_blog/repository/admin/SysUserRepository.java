@@ -1,6 +1,6 @@
 package com.oyasumi.cook_blog.repository.admin;
 
-import com.oyasumi.cook_blog.model.SysUser;
+import com.oyasumi.cook_blog.model.admin.SysUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

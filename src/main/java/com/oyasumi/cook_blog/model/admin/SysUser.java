@@ -1,4 +1,4 @@
-package com.oyasumi.cook_blog.model;
+package com.oyasumi.cook_blog.model.admin;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.ColumnTransformer;
